@@ -1,10 +1,10 @@
 import { CLICK_UPDATE_VALUE } from '../actions/actionTypes'
 
-const initialState = {
+export const initialState = {
   newValue: ''
 }
 
-export const clickReducer = (state = initialState, action) => {
+const clickReducer = (state = initialState, action) => {
   switch(action.type) {
     case CLICK_UPDATE_VALUE:
       return {
@@ -15,3 +15,5 @@ export const clickReducer = (state = initialState, action) => {
       return state;
   }
 }
+
+export default clickReducer;

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { clickButton } from './actions'
+import PropTypes from 'prop-types'
+import Connect from './store/connect'
+import { clickButton } from './store/actions'
 import './App.css';
 
-export default function App(){
-  const newValue = useSelector(store => store.clickState.newValue)
-  const dispatch = useDispatch()
+const App = ({ dispatch, newValue }) => {
+  const clickHandler = () => dispatch(clickButton(inputValue))
 
   const [inputValue, setInputValue] = useState('');
   
@@ -16,10 +16,24 @@ export default function App(){
         onChange={(e) => setInputValue(e.target.value)}
         value={inputValue}
       />
-      <button onClick={() => dispatch(clickButton(inputValue))}>
+      <button onClick={clickHandler}>
         Click
       </button>
       <h1>{newValue}</h1>
     </div>
   );
 }
+
+App.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  newValue: PropTypes.string.isRequired
+}
+
+const mapStateToProps = ({newValue}, props) => {
+  return {
+    newValue,
+    ...props
+  }
+}
+
+export default Connect(mapStateToProps)(App);
